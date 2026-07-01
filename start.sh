@@ -333,7 +333,7 @@ setJVMMemory() {
       JVM_MX=$(echo "$SPECIFY_MEMORY/1024*0.6" | bc | awk -F. '{print $1"g"}')
       JVM_MS=$JVM_MX
     else
-      total=$(`echo getTotalMemory`)
+      total=$(getTotalMemory)
       MAX_DIRECT_MEMORY=$(echo "$total/1024/1024*0.1" | bc | awk -F. '{print $1"g"}')
       JVM_MX=$(echo "$total/1024/1024*0.6" | bc | awk -F. '{print $1"g"}')
       JVM_MS=$JVM_MX
