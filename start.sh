@@ -151,7 +151,7 @@ getLatestReleaseVersion() {
 }
 
 checkVersion() {
- github_release_version=$(`echo getLatestReleaseVersion`)
+ github_release_version=$(getLatestReleaseVersion)
  if [[ -n $github_release_version ]]; then
   echo "info: github latest version: $github_release_version"
   echo $github_release_version
@@ -162,7 +162,7 @@ checkVersion() {
 }
 
 upgrade() {
-  latest_version=$(`echo getLatestReleaseVersion`)
+  latest_version=$(getLatestReleaseVersion)
   echo "info: latest version: $latest_version"
   if [[ -n $latest_version ]]; then
     old_jar="$PWD/$JAR_NAME"
@@ -196,7 +196,7 @@ mkdirFullNode() {
   if [ ! -d $FULL_NODE_DIR ]; then
     echo "info: create $FULL_NODE_DIR"
     mkdir $FULL_NODE_DIR
-    $(cp $0 $FULL_NODE_DIR)
+    cp $0 $FULL_NODE_DIR
     cd $FULL_NODE_DIR
   elif [ -d $FULL_NODE_DIR ]; then
     cd $FULL_NODE_DIR
@@ -204,7 +204,7 @@ mkdirFullNode() {
 }
 
 quickStart() {
-  full_node_version=$(`echo getLatestReleaseVersion`)
+  full_node_version=$(getLatestReleaseVersion)
   if [[ -n $full_node_version ]]; then
     mkdirFullNode
     echo "info: check latest version: $full_node_version"
@@ -280,7 +280,7 @@ stopService() {
 
 checkAllowMemory() {
   os=`uname`
-  totalMemory=$(`echo getTotalMemory`)
+  totalMemory=$(getTotalMemory)
   total=`expr $totalMemory / 1024`
   if [[ $os == 'Darwin' ]]; then
     return
@@ -333,7 +333,7 @@ setJVMMemory() {
       JVM_MX=$(echo "$SPECIFY_MEMORY/1024*0.6" | bc | awk -F. '{print $1"g"}')
       JVM_MS=$JVM_MX
     else
-      total=$(`echo getTotalMemory`)
+      total=$(getTotalMemory)
       MAX_DIRECT_MEMORY=$(echo "$total/1024/1024*0.1" | bc | awk -F. '{print $1"g"}')
       JVM_MX=$(echo "$total/1024/1024*0.6" | bc | awk -F. '{print $1"g"}')
       JVM_MS=$JVM_MX
@@ -383,7 +383,7 @@ rebuildManifest() {
     $JAVACMD -jar $ARCHIVE_JAR -d $REBUILD_DIR -m $REBUILD_MANIFEST_SIZE -b $REBUILD_BATCH_SIZE
   else
     echo 'info: download the rebuild manifest plugin from the github'
-    local latest=$(`echo getLatestReleaseVersion`)
+    local latest=$(getLatestReleaseVersion)
     download $RELEASE_URL/download/GreatVoyage-v"$latest"/$ARCHIVE_JAR $ARCHIVE_JAR
     if [[ $download == 0 ]]; then
       echo 'info: download success, rebuild manifest'
@@ -428,7 +428,7 @@ specifyConfig(){
 
 checkSign() {
   echo 'info: verify signature'
-  local latest_version=$(`echo getLatestReleaseVersion`)
+  local latest_version=$(getLatestReleaseVersion)
   download $RELEASE_URL/download/$latest_version/sha256sum.txt sha256sum.txt
   fullNodeSha256=$(cat sha256sum.txt|grep 'FullNode'| awk -F ' ' '{print $1}')
 
@@ -603,7 +603,7 @@ if [[ $UPGRADE == true ]]; then
 fi
 
 if [[ $DOWNLOAD == true ]]; then
-  latest=$(`echo getLatestReleaseVersion`)
+  latest=$(getLatestReleaseVersion)
   if [[ -n $latest ]]; then
     download $RELEASE_URL/download/$latest/$JAR_NAME $latest
     exit
