@@ -139,22 +139,22 @@ public class JsonFormatTest {
     StringBuilder out1 = new StringBuilder();
 
     privateMethod.invoke(null, out1, input1);
-    assertNotNull(out1);
+    assertEquals("\\u0009", out1.toString());
 
     char input2 = 0x99;
     StringBuilder out2 = new StringBuilder();
     privateMethod.invoke(null, out2, input2);
-    assertNotNull(out2);
+    assertEquals("\\u0099", out2.toString());
 
     char input3 = 0x999;
     StringBuilder out3 = new StringBuilder();
     privateMethod.invoke(null, out3, input3);
-    assertNotNull(out3);
+    assertEquals("\\u0999", out3.toString());
 
     char input4 = 0x1001;
     StringBuilder out4 = new StringBuilder();
     privateMethod.invoke(null, out4, input4);
-    assertNotNull(out4);
+    assertEquals("\\u1001", out4.toString());
   }
 
   @Test
