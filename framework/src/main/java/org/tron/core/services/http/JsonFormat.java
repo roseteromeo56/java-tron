@@ -903,7 +903,7 @@ public class JsonFormat {
     } else if (ch < 0x1000) {
       prefix = "\\u0";
     }
-    builder.append(prefix).append(Integer.toHexString(ch));
+    builder.append(prefix).append(String.format( "%02X", ch ));
   }
 
   /**
