@@ -895,15 +895,7 @@ public class JsonFormat {
   }
 
   static void appendEscapedUnicode(StringBuilder builder, char ch) {
-    String prefix = "\\u";
-    if (ch < 0x10) {
-      prefix = "\\u000";
-    } else if (ch < 0x100) {
-      prefix = "\\u00";
-    } else if (ch < 0x1000) {
-      prefix = "\\u0";
-    }
-    builder.append(prefix).append(String.format( "%02X", ch ));
+    builder.append("\\u").append(String.format("%04X", (int) ch));
   }
 
   /**
