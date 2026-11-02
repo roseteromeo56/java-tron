@@ -345,7 +345,7 @@ setJVMMemory() {
 }
 
 startService() {
-  echo $(date) >>start.log
+  echo "$(date)" >>start.log
   if [[ ! $JAR_NAME =~ '-c' ]]; then
      FULL_START_OPT="$FULL_START_OPT -c $DEFAULT_FULL_NODE_CONFIG"
   fi
