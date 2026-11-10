@@ -318,7 +318,7 @@ getTotalMemory() {
     return
   elif [[  $os == 'Darwin' ]]; then
     total=$(sysctl -a | grep mem |grep hw.memsize |awk -F ' ' '{print $2}')
-    echo `expr $total / 1024`
+    echo "`expr $total / 1024`"
   fi
 }
 
